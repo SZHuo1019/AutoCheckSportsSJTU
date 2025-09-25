@@ -2,11 +2,11 @@
 
 ## Note 
 - 该项目仅用于上海交通大学校内体育场馆的空余场地检测，目的是监控场地的可预约状态并发送通知提醒，使得空余场地资源能够被更有效地利用。
-- 不提供任何预订（抢场地）功能，同时谴责任何利用该项目（以及任何程序）进行抢场地的行为。
+- **不提供任何预订（抢场地）功能，同时谴责任何利用该项目（以及任何程序）进行抢场地的行为。**
 - 目前自动通知功能仅支持 macOS 系统，其他系统用户可自行扩展。
-- 请不要分享或公开发布包含个人账号信息的配置文件（如 `.env`），以防JAccount账号被盗用。
+- **请不要分享或公开发布包含个人账号信息的配置文件（如 `.env`），以防jAccount账号被盗用。**
 - 请不要频繁运行该脚本，以免对馆预约系统造成不必要的负担。
-- 本项目仅供学习和研究使用，不得将其用于任何违反上海交通大学相关规定的用途，使用者需自行承担相关责任。
+- 本项目仅供学习和研究使用，不得将其用于任何违反**上海交通大学相关规定**的用途，使用者需自行承担相关责任。
 
 ## Project Status 
 
@@ -16,16 +16,16 @@
 
 **Prerequisites**
 - macOS (other systems supported but desktop alerts use macOS `osascript` fallback).
-- Python 3.11 with conda environment `autoweb` (already created according to setup notes).
+- Python 3.11 with conda environment `your_env_name` (already created according to setup notes).
 - Tesseract OCR (`brew install tesseract`) so the script can auto-fill captcha.
 
 **Setup Steps**
-- Activate the conda env: `conda activate autoweb`.
+- Activate the conda env: `conda activate <your_env_name>`.
 - Install dependencies: `pip install -r requirements.txt`.
 - Install Playwright browsers: `playwright install chromium`.
 - Create `.env` from `.env.example` and fill in your credentials and venue/date filters.
 - Run once in headful mode to complete any slider verification and store the session:
-  `conda run -n autoweb python autocheck_sports.py --once --headful`.
+  `conda run -n <your_env_name> python autocheck_sports.py --once --headful`.
 
 **Configuration**
 - `USERNAME` / `PASSWORD`: SJTU jAccount login.
@@ -38,17 +38,13 @@
 - `TESSERACT_CMD`: Set to the absolute path of the Tesseract executable if it is not on `PATH`.
 
 **Usage**
-- Single check (headless): `conda run -n autoweb python autocheck_sports.py --once`.
+- Single check (headless): `conda run -n <your_env_name> python autocheck_sports.py --once`.
 - Single check with visible browser for debugging: add `--headful`.
-- Continuous monitoring: `conda run -n autoweb python autocheck_sports.py` (respects the interval from `.env`).
+- Continuous monitoring: `conda run -n <your_env_name> python autocheck_sports.py` (respects the interval from `.env`).
 - Logs are printed to stdout; redirect to `auto.log` if you need history: `... autocheck_sports.py >> auto.log 2>&1`.
 - When you see "Discovered X new slots" in the logs, check your desktop notifications. This happens only when two conditions are met:
   1. New available slots are found that match your filters.
   2. These slots have not been notified before (deduped via `state.db`).
-
-**Scheduling**
-- Cron example (every 5 minutes): `*/5 * * * * /Users/sz/miniconda3/envs/autoweb/bin/python /Users/sz/code/autoreser/autocheck_sports.py >> /Users/sz/code/autoreser/auto.log 2>&1`.
-- Windows Task Scheduler: run `python.exe` with argument `C:\path\to\autocheck_sports.py`, configure repeat every 5 minutes.
 
 **Troubleshooting**
 - Delete `state.db` if you want to clear the deduped slot history.
