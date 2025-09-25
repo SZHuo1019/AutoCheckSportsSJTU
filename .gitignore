@@ -1,0 +1,19 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Environment files
+.env
+
+# Logs and debugging
+*.log
+
+# Local data/state
+state.db
+user_data/
+
+# General
+.DS_Store
